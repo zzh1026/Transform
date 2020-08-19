@@ -1,0 +1,66 @@
+apply plugin: 'groovy'  //必须
+apply plugin: 'maven'
+
+//use java library
+//apply plugin: 'java-library'
+//use groovy library
+//apply plugin: 'groovy'
+
+dependencies {
+    implementation gradleApi()//gradle sdk
+    implementation localGroovy()//groovy sdk
+    implementation 'com.android.tools.build:gradle:4.0.1'
+}
+
+repositories {
+    mavenLocal()
+    google()
+    jcenter()
+    mavenCentral() //必须
+}
+
+sourceSets {
+    main {
+        groovy {
+            srcDir 'src/main/groovy'
+        }
+        java {
+            srcDir 'src/main/java'
+        }
+        resources {
+            srcDir 'src/main/resources'
+        }
+    }
+}
+
+sourceCompatibility = "1.7"
+targetCompatibility = "1.7"
+
+/**
+ * 插件入口类
+ */
+class TestPlugin implements Plugin<Project> {
+
+    @Override
+    void apply(Project project) {
+        println " ===================================== "
+        println " use plugin TestPlugin success "
+        println " ===================================== "
+    }
+}
+
+apply plugin: TestPlugin
+
+//def group='com.ncf.plg'
+//def version='3.0.0'
+//def artfactid='myGradlePlugin'
+
+//1个点表示当前module根目录，2个点表示project的根目录。
+//repositories {
+//    mavenDeployer {
+//        repository(url: uri('../public'))  //注意相对路径，在主项目目录下
+//    }
+//    pom.groupId=group
+//    pom.artifactId=artfactid
+//    pom.version=version
+//}
